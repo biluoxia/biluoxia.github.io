@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Git 分支 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="分支问题：多任务并行开发的时候，避免不了，各个任务之间相互影响，我们也可以采用备份文件夹的方式，来避免影响，但是这种方式不可取，因为一旦任务过多，文件夹数量也会随之增多不容易维护，最终的代码合并，也会出现问题 分支git中有个内容，叫做分支，分支的作用，其实和刚才我们做的备份一个文件夹的功能一致，就是对于当前的代码，做一个备份 分支的使用1234567891011121314151.创建分支git">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 分支">
+<meta property="og:url" content="http://yoursite.com/2017/10/12/Git-分支/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="分支问题：多任务并行开发的时候，避免不了，各个任务之间相互影响，我们也可以采用备份文件夹的方式，来避免影响，但是这种方式不可取，因为一旦任务过多，文件夹数量也会随之增多不容易维护，最终的代码合并，也会出现问题 分支git中有个内容，叫做分支，分支的作用，其实和刚才我们做的备份一个文件夹的功能一致，就是对于当前的代码，做一个备份 分支的使用1234567891011121314151.创建分支git">
+<meta property="og:updated_time" content="2017-10-12T12:14:56.700Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 分支">
+<meta name="twitter:description" content="分支问题：多任务并行开发的时候，避免不了，各个任务之间相互影响，我们也可以采用备份文件夹的方式，来避免影响，但是这种方式不可取，因为一旦任务过多，文件夹数量也会随之增多不容易维护，最终的代码合并，也会出现问题 分支git中有个内容，叫做分支，分支的作用，其实和刚才我们做的备份一个文件夹的功能一致，就是对于当前的代码，做一个备份 分支的使用1234567891011121314151.创建分支git">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Git-分支" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/12/Git-分支/" class="article-date">
+  <time datetime="2017-10-12T12:08:55.000Z" itemprop="datePublished">2017-10-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Git 分支
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>多任务并行开发的时候，避免不了，各个任务之间相互影响，我们也可以采用备份文件夹的方式，来避免影响，但是这种方式不可取，因为一旦任务过多，文件夹数量也会随之增多不容易维护，最终的代码合并，也会出现问题</p>
+<h2 id="分支-1"><a href="#分支-1" class="headerlink" title="分支"></a>分支</h2><p>git中有个内容，叫做分支，分支的作用，其实和刚才我们做的备份一个文件夹的功能一致，就是对于当前的代码，做一个备份</p>
+<h2 id="分支的使用"><a href="#分支的使用" class="headerlink" title="分支的使用"></a>分支的使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">1.创建分支</div><div class="line">git branch 分支名称</div><div class="line"></div><div class="line">2.切换分支</div><div class="line">git checkout 分支名称</div><div class="line"></div><div class="line">3.合并分支</div><div class="line">git checkout master</div><div class="line">git merge 要合并的分支的名称</div><div class="line"></div><div class="line">4.删除分支</div><div class="line">git branch -d 分支名称</div><div class="line"></div><div class="line">5.创建并切换分支</div><div class="line">git checkout -b 分支名称</div></pre></td></tr></table></figure>
+<h2 id="冲突问题"><a href="#冲突问题" class="headerlink" title="冲突问题"></a>冲突问题</h2><p>分支A中创建了文件xx.txt, 分支B中也创建了个xx.txt，那么git就会发现，有两个同名的文件，这时候，就是冲突产生了，冲突产生之后，合并会失败，需要先解决冲突，然后再次提交，才能正常的合并。</p>
+<h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>冲突产生之后，git会告知哪个文件冲突了，然后在文件中，会用 &gt;&gt;&gt;&gt; ==== &lt;&lt;&lt; 这样的方式将冲突的内容标记出来，我们只需要将标记删除，然后将代码改成自己想要的结果，再次add commit即可！！</p>
+<h2 id="分支的使用原则"><a href="#分支的使用原则" class="headerlink" title="分支的使用原则"></a>分支的使用原则</h2><p>只要有新的任务，就开辟一个新的分支去做，做完之后，将分支合并回去就可以了！！</p>
+<h2 id="master分支"><a href="#master分支" class="headerlink" title="master分支"></a>master分支</h2><p>这个分支，是git默认自动创建的！！</p>
+<p>创建的时机，并不是在git init之后就会有，而是，在第一次提交完成之后，才会默认的创建出来这个分支！！</p>
+<h2 id="分支切换要注意的事项"><a href="#分支切换要注意的事项" class="headerlink" title="分支切换要注意的事项"></a>分支切换要注意的事项</h2><p>必须先将所有的更改，做一次提交之后，再切换分支！！！</p>
+<h2 id="回滚操作的恢复操作"><a href="#回滚操作的恢复操作" class="headerlink" title="回滚操作的恢复操作"></a>回滚操作的恢复操作</h2><ol>
+<li><p>查看所有的操作日志<br> <code>git log -g</code></p>
+</li>
+<li><p>创建新的分支，将要恢复到的版本号作为最后一个参数<br> <code>git branch 分支名 版本号</code></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/12/Git-分支/" data-id="cj8ofg7g00000vwsx7s0jkfpt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/12/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/10/12/Git-分支/">Git 分支</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/12/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 biluoxia<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
