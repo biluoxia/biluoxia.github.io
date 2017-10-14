@@ -3,6 +3,14 @@
   
     
     <entry>
+      <title><![CDATA[art-Template基本用法]]></title>
+      <url>/2017/10/14/art-Template%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Object.defineProperty]]></title>
       <url>/2017/10/13/Object-defineProperty/</url>
       <content type="html"><![CDATA[<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>Object.defineProperty方法可以用来给对象添加属性,并且可以设置这个属性的特性</p>
