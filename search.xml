@@ -3,10 +3,238 @@
   
     
     <entry>
+      <title><![CDATA[browsersync的基本使用]]></title>
+      <url>/2017/10/20/browsersync%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"><![CDATA[<h1 id="browsersync"><a href="#browsersync" class="headerlink" title="browsersync"></a>browsersync</h1><h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h2><p>browsersync</p>
+<p>浏览器同步测试工具</p>
+<p>跟liver-server很像,但比liver-server多了一个很厉害的功能,那就是,实现了多设备同步测试</p>
+<h2 id="2-下载安装"><a href="#2-下载安装" class="headerlink" title="2. 下载安装"></a>2. 下载安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install browser-sync -g</div></pre></td></tr></table></figure>
+<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">browser-sync start --server --files &quot;css/*.css&quot;</div><div class="line">或者</div><div class="line"></div><div class="line">browser-sync start --server --files &quot;*.*&quot;</div><div class="line"></div><div class="line">*.* 表示的是以所有文件名开头的所有后缀</div></pre></td></tr></table></figure>
+<p>输完以上命令,敲回车,就会打开浏览器,但是不会显示任何东西,因为browsersync没有列表展示</p>
+<p>可以新建一个html文件,在里面编写一些代码,然后,就可以在浏览器上同步了</p>
+<p>通过访问本地的ip,可以同步到访问的那台电脑上;</p>
+<p>还可以访问他提供的内网localhost:3001<br>来进行一些同步的配置</p>
+<h2 id="4-浏览器同步管理"><a href="#4-浏览器同步管理" class="headerlink" title="4. 浏览器同步管理"></a>4. 浏览器同步管理</h2><ol>
+<li><p>Overview </p>
+<p>Current Connections<br>列出当前有多少台机器在访问这个网站</p>
+</li>
+<li><p>Sync Options</p>
+</li>
+</ol>
+<p>用来设置一些同步的操作<br>例如,是否能够刷新,是否可以点击,等等</p>
+<ol>
+<li>其他</li>
+</ol>
+<p>还有一些其他有用的功能,可以自行研究</p>
+<h2 id="5-Browsersync-Gulp-js"><a href="#5-Browsersync-Gulp-js" class="headerlink" title="5. Browsersync + Gulp.js"></a>5. Browsersync + Gulp.js</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">npm install browser-sync gulp --sav-dev</div><div class="line"></div><div class="line">或者</div><div class="line"></div><div class="line">npm install browser-sync -D</div></pre></td></tr></table></figure>
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2. 使用"></a>2. 使用</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> browserSync = <span class="built_in">require</span>(<span class="string">'browser-sync'</span>).create()</div><div class="line"></div><div class="line"><span class="comment">//静态服务器</span></div><div class="line">gulp.task(<span class="string">'browser-sync'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//init初始化了一个服务器</span></div><div class="line">   browserSync.init(&#123;</div><div class="line">       server:&#123;</div><div class="line">           baseDir:<span class="string">"./"</span></div><div class="line">       &#125;</div><div class="line">   &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>然后,执行任务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gulp browser-sync</div></pre></td></tr></table></figure></p>
+<p>这样也可以打开浏览器,进行同步</p>
+<h3 id="3-在文件发送变化的时候-刷新浏览器"><a href="#3-在文件发送变化的时候-刷新浏览器" class="headerlink" title="3. 在文件发送变化的时候,刷新浏览器"></a>3. 在文件发送变化的时候,刷新浏览器</h3><p>但是,有一个问题:<br>通过这种方式打开的页面,不能自动刷新了</p>
+<p>解决办法:<br>使用gulp的watch方法,用来监听文件的改变</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> browserSync = <span class="built_in">require</span>(<span class="string">'browser-sync'</span>).create()</div><div class="line"></div><div class="line"><span class="keyword">var</span> reload = browserSync.reload;</div><div class="line"></div><div class="line"><span class="comment">//静态服务器</span></div><div class="line">gulp.task(<span class="string">'browser-sync'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//init初始化了一个服务器</span></div><div class="line">   browserSync.init(&#123;</div><div class="line">       server:&#123;</div><div class="line">           baseDir:<span class="string">"./"</span></div><div class="line">       &#125;</div><div class="line">   &#125;);</div><div class="line"></div><div class="line">    <span class="comment">//设置一个监视:当文件发生改变的时候,刷新浏览器</span></div><div class="line">    gulp.watch(<span class="string">"*.*"</span>,reload);</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>然后,再运行命令,打开浏览器,就可以实现自动刷新了</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 前端实用工具 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gulp基本使用方法]]></title>
+      <url>/2017/10/20/gulp%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<h1 id="gulp"><a href="#gulp" class="headerlink" title="gulp"></a>gulp</h1><h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h2><p>gulp是一个自动化构建工具，它能够帮助我们简化开发过程当中一些比较繁琐但是简单的工作，比如代码压缩，less文件转换。</p>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h2><p>通过npm安装gulp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. npm install gulp-cli -g  //全局安装gulp工具</div><div class="line"></div><div class="line">2. npm install gulp-D //这个命令要在当前项目文件夹中执行，也就是在当前项目中，安装gulp工具会用到的一些资源</div></pre></td></tr></table></figure>
+<h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><h3 id="gulpfile-js"><a href="#gulpfile-js" class="headerlink" title="gulpfile.js"></a>gulpfile.js</h3><p>gulpfile.js<br>这个文件,其实就是gulp的任务文件,我们要指定gulp做哪些事情，全都在这个文件中进行书写</p>
+<p>在使用gulp的时候，需要给当前项目的根目录中创建一个gulpfile.js文件</p>
+<p>命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch gulpfile.js</div></pre></td></tr></table></figure></p>
+<h3 id="编写gulpfile文件"><a href="#编写gulpfile文件" class="headerlink" title="编写gulpfile文件"></a>编写gulpfile文件</h3><p>(使用了node.js代码,其实跟js代码一样)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1. 通过node.js模块化方式引入gulp</span></div><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">"gulp"</span>);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//2. 调用gulp.task方法，创建新的任务</span></div><div class="line"><span class="comment">// gulp.tast("任务名称", funciton()&#123; //任务要执行的内容 &#125;)</span></div><div class="line">gulp.task(<span class="string">'default'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	 <span class="built_in">console</span>.log(<span class="string">"default任务被执行了"</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>其实gulp就是由一个个任务组成的,是一个任务流</p>
+<p>接下来,怎样在gulp中写任务?<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'compressjs'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="comment">//1.通过gulp.src方法指定要对哪些文件进行操作</span></div><div class="line">	 gulp.src(<span class="string">"./*.js"</span>)</div><div class="line">	</div><div class="line">	 <span class="comment">//可以通过pipe将内容传递给插件，让插件进行处理</span></div><div class="line">    .pipe()</div><div class="line"></div><div class="line">     <span class="comment">//pipe的最后一环,将内容全部存放到dist中</span></div><div class="line">    .pipe(gulp.dest(<span class="string">"dist"</span>))</div><div class="line">   </div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="gulp的方法"><a href="#gulp的方法" class="headerlink" title="gulp的方法"></a>gulp的方法</h3><ol>
+<li>task</li>
+</ol>
+<p>可以用来创建新的任务， gulp.task(“任务名”, function(){})</p>
+<ol>
+<li>src</li>
+</ol>
+<p>可以用来读取指定的要操作的文件 gulp.src(“文件路径可用通配符*”)</p>
+<ol>
+<li>pipe</li>
+</ol>
+<p>可以用来将读取到的文件，或者说上一次处理结果，进行传递，传递给下一个操作</p>
+<ol>
+<li>dest</li>
+</ol>
+<p>可以将通过pipe传递过来的内容进行保存 gulp.dest(“目标文件夹”)</p>
+<ol>
+<li>watch</li>
+</ol>
+<p>可以通过watch方法监听文件的变化，当有变化发生时，可以执行指定的任务，或者一些别的代码</p>
+<h3 id="js代码压缩"><a href="#js代码压缩" class="headerlink" title="js代码压缩"></a>js代码压缩</h3><p>要进行js代码压缩,需要下载一个gulp插件</p>
+<p>可以到npm官方网站搜索到<br>gulp-uglify</p>
+<ol>
+<li><p>下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install gulp-uglify -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>引入uglify包 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">"gulp-uglify"</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'compressjs'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">	 gulp.src(<span class="string">"./*.js"</span>)</div><div class="line">     <span class="comment">//通过gulp.src指定要对哪些文件进行操作</span></div><div class="line">    .pipe(uglify())</div><div class="line">    <span class="comment">//通过pipe将内容传递给uglify插件处理</span></div><div class="line">    .pipe(gulp.dest(<span class="string">"dist"</span>))</div><div class="line">    <span class="comment">//插件处理完之后,再通过最后一步,将文件保存起来</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>执行gulp任务</p>
+</li>
+</ol>
+<p>在命令行中,切换到当前项目所在的文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gulp 任务名称</div><div class="line">gulp   //不带任务名称的时候，gulp会默认的去执行名为default的任务</div></pre></td></tr></table></figure></p>
+<h3 id="less文件转换"><a href="#less文件转换" class="headerlink" title="less文件转换"></a>less文件转换</h3><p>就是将less文件,转换成css文件</p>
+<p>同样,也需要插件<br>gulp-less</p>
+<ol>
+<li><p>下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">npm install gulp-less</div><div class="line"></div><div class="line">npm install gulp-less -D </div><div class="line"></div><div class="line">加了 -D,就会将下载下来的资源存放到package.json中</div></pre></td></tr></table></figure>
+</li>
+<li><p>引入gulp-less包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> less = <span class="built_in">require</span>(<span class="string">"gulp-less"</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'less'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">	 gulp.src(<span class="string">"./*.js"</span>)</div><div class="line">     <span class="comment">//通过gulp.src指定要对哪些文件进行操作</span></div><div class="line">    .pipe(less())</div><div class="line">    <span class="comment">//通过pipe将内容传递给uglify插件处理</span></div><div class="line">    .pipe(gulp.dest(<span class="string">"./dist/css"</span>))</div><div class="line">    <span class="comment">//插件处理完之后,再通过最后一步,将文件保存起来</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>执行gulp任务</p>
+</li>
+</ol>
+<p>在命令行中,切换到当前项目所在的文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gulp 任务名称</div><div class="line">gulp   //不带任务名称的时候，gulp会默认的去执行名为default的任务</div></pre></td></tr></table></figure></p>
+<h3 id="合并js文件"><a href="#合并js文件" class="headerlink" title="合并js文件"></a>合并js文件</h3><p>可以减少请求,提高网页访问效能<br>但一般不怎么用,要考虑重复项</p>
+<p>同样,也需要插件<br>gulp-concat</p>
+<ol>
+<li><p>下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install gulp-concat -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>引入concat包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> concat = <span class="built_in">require</span>(<span class="string">"gulp-concat);</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'compressjs'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">	 gulp.src(<span class="string">"./*.js"</span>)</div><div class="line">     <span class="comment">//通过gulp.src指定要对哪些文件进行操作</span></div><div class="line">    .pipe(concat(<span class="string">"all.js"</span>))</div><div class="line">    <span class="comment">//通过pipe将内容传递给uglify插件处理</span></div><div class="line">    .pipe(gulp.dest(dist))</div><div class="line">    <span class="comment">//插件处理完之后,再通过最后一步,将文件保存起来</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>4.执行gulp任务</p>
+<p>在命令行中,切换到当前项目所在的文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gulp 任务名称</div><div class="line">gulp   //不带任务名称的时候，gulp会默认的去执行名为default的任务</div></pre></td></tr></table></figure></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>比如,压缩css代码为一行,合并css代码等,都可以通过百度查到对应的方法</p>
+<h3 id="设置监听文件变化-实现自动刷新的功能"><a href="#设置监听文件变化-实现自动刷新的功能" class="headerlink" title="设置监听文件变化,实现自动刷新的功能"></a>设置监听文件变化,实现自动刷新的功能</h3><p>利用watch方法</p>
+<p>需求:当less文件发送改变的时候,可以自动转换一次;<br>就是监视less文件的变化,去执行less任务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">"watch"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    gulp.watch(<span class="string">"*.less"</span>,[<span class="string">"less"</span>])</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>gulp.task(“watch”,function(){}) –&gt; 创建好watch任务</p>
+<p>gulp.watch(“<em>.less”,[“less”]) –&gt; 监视 </em>.less文件,less文件一变化就调用less任务</p>
+<p>这里用[ ],可以调用多个任务</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 前端实用工具 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[npm基础知识简介]]></title>
+      <url>/2017/10/20/npm%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AE%80%E4%BB%8B/</url>
+      <content type="html"><![CDATA[<h1 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h1><h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h2><p>npm 全称: Node Package Manager </p>
+<p>node包管理工具</p>
+<p><a href="https://www.npmjs.com" target="_blank" rel="external">npm官方网站</a></p>
+<p>这个网站中包含了，所有的可以通过npm下载的包，我们可以在网站中进行搜索，所有的包都会在这个网站中有说明文档！</p>
+<h2 id="2-作用"><a href="#2-作用" class="headerlink" title="2.作用"></a>2.作用</h2><ol>
+<li><p>可以使用npm来管理日常开发当中项目所用到的所有的资源包</p>
+</li>
+<li><p>可以使用npm来下载一些工具包</p>
+</li>
+</ol>
+<p>解释:</p>
+<ol>
+<li><p>资源包:在项目中会用到的一些资源(jQuery,bootstrap,angular,vue)</p>
+</li>
+<li><p>工具包:工具包可以提供一些实用的功能，这些功能跟项目的功能是没有关系的，只是可以帮助我们快捷的实现某些操作，比如说(live-server, hexo)</p>
+</li>
+</ol>
+<h2 id="3-使用方法"><a href="#3-使用方法" class="headerlink" title="3.使用方法"></a>3.使用方法</h2><h3 id="npm常见命令"><a href="#npm常见命令" class="headerlink" title="npm常见命令"></a>npm常见命令</h3><ol>
+<li>生成package.json文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm  init -y</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>如果没有package.json文件,就不能下载,package.json是npm的配置文件</p>
+<ol>
+<li>下载安装包命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">npm install  //根据当前项目中的package.json中存储的包列表,自动下载所有的依赖包</div><div class="line"></div><div class="line">npm install 包名@版本号  //将指定的包下载下来存放到node_modules文件夹中</div><div class="line"></div><div class="line">npm install 包名@版本号 --save</div><div class="line">npm install 包名@版本号 --s //将指定的包下载下来存放到node_modules文件夹中, 并且在package.json中Dependencies中加入包信息</div><div class="line"></div><div class="line">npm install 包名@版本号 --save-dev</div><div class="line">npm install 包名@版本号 -D  //将指定的包下载下来存放到node_modules文件夹中, 并且在package.json中DevDependencies中加入包信息</div><div class="line"></div><div class="line"></div><div class="line">npm install 包名@版本号 -g</div><div class="line">//全局安装指定的包,一般我们会将工具包作为全局安装，资源包，项目中会用到资源，都是本地安装</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="package-json文件的作用"><a href="#package-json文件的作用" class="headerlink" title="package.json文件的作用"></a>package.json文件的作用</h3><ol>
+<li>npm包管理</li>
+</ol>
+<p>项目通过npm进行包管理,下载的文件都会存放在node_modules文件夹中</p>
+<p>将项目代码共享给别人的时候,node_modules文件夹是不会一起共享的,因为这个文件夹中的内容太过复杂,太多<br>而且这个文件夹中的内容，别人是可以通过其他手段获取到的</p>
+<ol>
+<li>package.json保存设置</li>
+</ol>
+<p>并不是在下载所有包的时候都会自动将包信息添加进来<br>而是需要在下载包的时候，通过命令来指定是否要进行保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install 包名称@版本号 --save</div><div class="line">npm install 包名称@版本号 --save-dev</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>如何获取别人的引用包的资源</p>
+<p> 做代码共享的时候<br> 将node_modules文件夹剔除之后</p>
+<p> 单独只将项目文件交给别人<br> 并且将所需要的包列表（package.json）交给别人</p>
+<p> 这个人只需要<br> 执行一句命令</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">npm install</div><div class="line"></div><div class="line">npm会自动将package.json列表中保存的所有的包全部下载一份</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="cnpm"><a href="#cnpm" class="headerlink" title="cnpm"></a>cnpm</h2><p>中国的npm,淘宝开发的</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 前端实用工具 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[template]]></title>
       <url>/2017/10/15/template/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<h1 id="art-Template"><a href="#art-Template" class="headerlink" title="art-Template"></a>art-Template</h1><h2 id="模板的使用步骤"><a href="#模板的使用步骤" class="headerlink" title="模板的使用步骤"></a>模板的使用步骤</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//（1）引包  ---   template-native.js</span></div><div class="line"><span class="comment">//（2）写一个模板 --&lt;script type="text/template" id="tpl"&gt; 模板内容 &lt;/script&gt;</span></div><div class="line"><span class="comment">//（3）将script模板和数据进行关联 通过template进行关联</span></div><div class="line"><span class="comment">// (4) 根据需求书写模板语法</span></div><div class="line"><span class="comment">// (5) 将template里面的返回值(DOM字符串)追加到对应的标签里面</span></div></pre></td></tr></table></figure>
+<h2 id="使用原理"><a href="#使用原理" class="headerlink" title="使用原理"></a>使用原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//界定符 &lt;% %&gt; &#123;&#123;&#125;&#125;  是根据template内部的解析规则而来的</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//template.js文件内部提供一个方法template(),用来查询到对应id的模板,进行解析,并返回解析DOM字符串</span></div><div class="line"></div><div class="line"><span class="comment">//template()的参数:</span></div><div class="line"><span class="comment">//1.模板的id值</span></div><div class="line"><span class="comment">//2.数据  格式必须是&#123;&#125;</span></div><div class="line"><span class="comment">//如果发送请求获取的数据格式不是&#123;&#125;,那么,可以通过自定义一个&#123;&#125;</span></div><div class="line"><span class="comment">//var obj= &#123;</span></div><div class="line">  <span class="comment">//  row:data</span></div><div class="line"><span class="comment">//&#125;</span></div><div class="line"><span class="comment">//然后,将obj传入即可</span></div><div class="line"></div><div class="line"><span class="comment">//注意:模板内部获取不到obj这个顶层对象</span></div></pre></td></tr></table></figure>
+<h2 id="构建模板语法"><a href="#构建模板语法" class="headerlink" title="构建模板语法"></a>构建模板语法</h2><p>art-template 支持标准语法与原始语法。标准语法可以让模板易读写，而原始语法拥有强大的逻辑表达能力。</p>
+<p>标准语法支持基本模板语法以及基本 JavaScript 表达式；原始语法支持任意 JavaScript 语句，这和 EJS 一样。</p>
+<h3 id="1-原始语法"><a href="#1-原始语法" class="headerlink" title="1.原始语法"></a>1.原始语法</h3><p>原始模板支持原生js语法</p>
+<h4 id="输出语法"><a href="#输出语法" class="headerlink" title="输出语法"></a>输出语法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&lt;%= value %&gt;</span></div><div class="line"><span class="comment">//&lt;%= data.key %&gt;</span></div><div class="line"><span class="comment">//&lt;%= data['key'] %&gt;</span></div><div class="line"><span class="comment">//&lt;%= a ? b : c %&gt;</span></div><div class="line"><span class="comment">//&lt;%= a || b %&gt;</span></div><div class="line"><span class="comment">//&lt;%= a + b %&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="逻辑语法"><a href="#逻辑语法" class="headerlink" title="逻辑语法"></a>逻辑语法</h4><h5 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&lt;% if (value) &#123; %&gt; ... &lt;% &#125; %&gt;</span></div><div class="line"><span class="comment">//&lt;% if (v1) &#123; %&gt; ... &lt;% &#125; else if (v2) &#123; %&gt; ... &lt;% &#125; %&gt;</span></div></pre></td></tr></table></figure>
+<h5 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&lt;% for(var i = 0; i &lt; target.length; i++)&#123; %&gt;</span></div><div class="line">  <span class="comment">//  &lt;%= i %&gt; &lt;%= target[i] %&gt;</span></div><div class="line"><span class="comment">//&lt;% &#125; %&gt;</span></div></pre></td></tr></table></figure>
+<p>for循环遍历数组<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&lt;% for(var i = 0; i &lt; row.length; i++) &#123;%&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//&lt;% &#125; %&gt;</span></div></pre></td></tr></table></figure></p>
+<p>for in循环遍历对象<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&lt;% for(var attr in row[i]) &#123;%&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//&lt;% &#125; %&gt;</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-标准语法"><a href="#2-标准语法" class="headerlink" title="2.标准语法"></a>2.标准语法</h3><h4 id="输出语法-1"><a href="#输出语法-1" class="headerlink" title="输出语法"></a>输出语法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&#123;&#123;value&#125;&#125;</span></div><div class="line"><span class="comment">//&#123;&#123;data.key&#125;&#125;</span></div><div class="line"><span class="comment">//&#123;&#123;data['key']&#125;&#125;</span></div><div class="line"><span class="comment">//&#123;&#123;a ? b : c&#125;&#125;</span></div><div class="line"><span class="comment">//&#123;&#123;a || b&#125;&#125;</span></div><div class="line"><span class="comment">//&#123;&#123;a + b&#125;&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="逻辑语法-1"><a href="#逻辑语法-1" class="headerlink" title="逻辑语法"></a>逻辑语法</h4><h5 id="条件-1"><a href="#条件-1" class="headerlink" title="条件"></a>条件</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&#123;&#123;if value&#125;&#125; ... &#123;&#123;/if&#125;&#125;</span></div><div class="line"><span class="comment">//&#123;&#123;if v1&#125;&#125; ... &#123;&#123;else if v2&#125;&#125; ... &#123;&#123;/if&#125;&#125;</span></div></pre></td></tr></table></figure>
+<h5 id="循环-1"><a href="#循环-1" class="headerlink" title="循环"></a>循环</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&#123;&#123;each target&#125;&#125;</span></div><div class="line">  <span class="comment">//  &#123;&#123;$index&#125;&#125; &#123;&#123;$value&#125;&#125;</span></div><div class="line"><span class="comment">//&#123;&#123;/each&#125;&#125;</span></div></pre></td></tr></table></figure>
+<h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><h3 id="注册过滤器"><a href="#注册过滤器" class="headerlink" title="注册过滤器"></a>注册过滤器</h3><p>语法:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//template.defaults.imports.自定义的过滤器名称 = function(value)&#123;</span></div><div class="line">           <span class="comment">//value接收到的就是 | 前面的要被过滤的数据</span></div><div class="line">           <span class="comment">//这个函数需要有个返回值，返回值就是最终过滤之后的内容</span></div><div class="line">   <span class="comment">// &#125;</span></div></pre></td></tr></table></figure></p>
+<p>使用方法:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//语法 &#123;&#123;数据 | 过滤器名称&#125;&#125;</span></div><div class="line"></div><div class="line"><span class="comment">//最终在页面上使用这个过滤器的时候</span></div><div class="line"><span class="comment">//&#123;&#123;v.tc_birthday | getage&#125;&#125;</span></div></pre></td></tr></table></figure></p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>当获取的数据的格式不是想要,可以通过过滤器进行设置,转成需要的格式</p>
+<p>比如:获取的是出生日期,但是需要的是年龄</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">template.defaults.imports.getage = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>().getFullYear() - <span class="keyword">new</span> <span class="built_in">Date</span>(value).getFullYear();</div><div class="line">   &#125;;</div></pre></td></tr></table></figure>
+<p>在模板中这样写:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//&lt;td&gt;&#123;&#123;v.tc_birthday | getage&#125;&#125;&lt;/td&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//tc_birthday是获取的数据(出生日期)</span></div></pre></td></tr></table></figure></p>
+<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><p>工具: 使用极速数据提供的数据<br>目的: 进行真正的发送ajax请求,获取数据,构建模板,展示到页面上得练习</p>
+<p>极速数据:提供后台php数据<br>网址:<a href="https://www.jisuapi.com/" target="_blank" rel="external">https://www.jisuapi.com/</a><br>使用的是前端传统的开发模式:前后端分离</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.查看后台接口文档</div><div class="line">2.根据需要的参数(用户输入)和返回的数据,挑选需要展示的部分,编写html结构</div><div class="line">3.写js代码(发送请求时,dataType要为jsonp,因为跨域问题;参数名也要和接口保持一致)</div><div class="line">4.构建模板</div></pre></td></tr></table></figure>
+]]></content>
       
+        
+        <tags>
+            
+            <tag> art-Template </tag>
+            
+        </tags>
         
     </entry>
     
@@ -66,23 +294,6 @@
             <tag> 学习笔记 </tag>
             
         </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>/2017/10/12/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-      
         
     </entry>
     
